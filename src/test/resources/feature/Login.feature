@@ -2,12 +2,6 @@ Feature: Login
 
   Scenario: Valid Login
 
-    Given User launches application
-
-    When User enters username "Admin"
-
-    And User enters password "admin123"
-
-    And User clicks login
+    When User logs in with username "Admin" and password "admin123"
 
     Then Dashboard should be displayed

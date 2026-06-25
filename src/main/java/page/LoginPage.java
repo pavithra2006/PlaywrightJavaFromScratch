@@ -1,5 +1,9 @@
 package page;
 
+import base.BasePage;
+import com.microsoft.playwright.Page;
+import utils.WaitUtils;
+
 public class LoginPage extends BasePage {
 
     private final String txtUsername =
@@ -11,6 +15,7 @@ public class LoginPage extends BasePage {
     private final String btnLogin =
             "//button[@type='submit']";
 
+
     public LoginPage(Page page) {
         super(page);
     }
@@ -20,6 +25,8 @@ public class LoginPage extends BasePage {
 
         fill(txtUsername,user);
         fill(txtPassword,password);
+        WaitUtils.waitForSelector(page,
+                btnLogin);
         click(btnLogin);
     }
 }

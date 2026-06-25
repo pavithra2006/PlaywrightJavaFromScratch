@@ -1,5 +1,8 @@
 package page;
 
+import base.BasePage;
+import com.microsoft.playwright.Page;
+
 public class HomePage extends BasePage {
 
     private final String lblDashboard =

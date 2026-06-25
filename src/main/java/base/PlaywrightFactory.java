@@ -1,5 +1,7 @@
 package base;
 
+import com.microsoft.playwright.*;
+
 public class PlaywrightFactory {
 
     private static final ThreadLocal<Page> page = new ThreadLocal<>();
