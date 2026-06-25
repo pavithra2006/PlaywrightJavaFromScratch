@@ -1,0 +1,48 @@
+2026-06-25 21:21:55
+                [main]
+                INFO 
+                org.testng.internal.Utils
+                - [TestNG] Running:
+  C:\Users\User\AppData\Local\JetBrains\IdeaIC2024.1\temp-testng-customsuite.xml
+
+2026-06-25 21:24:42
+                [main]
+                INFO 
+                org.testng.internal.Utils
+                - [TestNG] Running:
+  C:\Users\User\AppData\Local\JetBrains\IdeaIC2024.1\temp-testng-customsuite.xml
+
+2026-06-25 21:27:09
+                [main]
+                INFO 
+                org.testng.internal.Utils
+                - [TestNG] Running:
+  C:\Users\User\AppData\Local\JetBrains\IdeaIC2024.1\temp-testng-customsuite.xml
+
+2026-06-25 21:27:50
+                [main]
+                INFO 
+                page.LoginPage
+                - Performed fill action on: //input[@name='username'], with value: Admin
+2026-06-25 21:27:50
+                [main]
+                INFO 
+                page.LoginPage
+                - Performed fill action on: //input[@name='password'], with value: admin123
+2026-06-25 21:27:51
+                [main]
+                INFO 
+                page.LoginPage
+                - Clicked //button[@type='submit'] locator successfully
+2026-06-25 21:27:51
+                [main]
+                INFO 
+                page.LoginPage
+                - Inside isDashboardDisplayed
+2026-06-25 21:32:31
+                [main]
+                INFO 
+                org.testng.internal.Utils
+                - [TestNG] Running:
+  C:\Users\User\AppData\Local\JetBrains\IdeaIC2024.1\temp-testng-customsuite.xml
+
