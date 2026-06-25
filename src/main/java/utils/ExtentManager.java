@@ -1,0 +1,22 @@
+package utils;
+
+public class ExtentManager {
+
+    private static ExtentReports extent;
+
+    public static ExtentReports getInstance(){
+
+        if(extent == null){
+
+            ExtentSparkReporter spark =
+                    new ExtentSparkReporter(
+                            "reports/ExtentReport.html");
+
+            extent = new ExtentReports();
+
+            extent.attachReporter(spark);
+        }
+
+        return extent;
+    }
+}
