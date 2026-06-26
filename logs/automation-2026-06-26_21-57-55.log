@@ -1,0 +1,7 @@
+2026-06-26 21:57:56 [main] INFO  org.testng.internal.Utils - [TestNG] Running:
+  C:\Users\User\AppData\Local\JetBrains\IdeaIC2024.1\temp-testng-customsuite.xml
+
+2026-06-26 21:58:35 [main] INFO  page.LoginPage - Performed fill action on: //input[@name='username'], with value: Admin
+2026-06-26 21:58:35 [main] INFO  page.LoginPage - Performed fill action on: //input[@name='password'], with value: admin123
+2026-06-26 21:58:37 [main] INFO  page.LoginPage - Clicked //button[@type='submit'] locator successfully
+2026-06-26 21:58:37 [main] INFO  page.HomePage - Inside isDashboardDisplayed

@@ -1,6 +1,8 @@
 package page;
 
+import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
+import com.microsoft.playwright.options.WaitForSelectorState;
 
 public class HomePage extends BasePage {
 
@@ -12,8 +14,11 @@ public class HomePage extends BasePage {
     }
 
     public boolean isDashboardDisplayed(){
-        logger.info("Inside isDashboardDisplayed");
-        return page.locator(lblDashboard)
+//        page.pause();
+       page.locator(lblDashboard).waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.VISIBLE));
+        boolean dashboardHeader=page.locator(lblDashboard)
                 .isVisible();
+        logger.info("Is dashboard header displayed: " + dashboardHeader);
+        return dashboardHeader;
     }
 }

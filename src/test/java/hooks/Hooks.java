@@ -18,22 +18,14 @@ public class Hooks {
 
     @Before
     public void setup() {
-
         PlaywrightFactory.initBrowser();
-
         Page page = PlaywrightFactory.getPage();
-
         testContext.setPage(page);
-
         page.navigate(PropertiesUtil.getValue(ConfigProperties.BASEURL));
     }
 
     @After
     public void tearDown() {
-
-        PlaywrightFactory.getPage()
-                .context()
-                .browser()
-                .close();
+        PlaywrightFactory.quitBrowser();
     }
 }
