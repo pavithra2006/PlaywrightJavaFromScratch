@@ -3,9 +3,10 @@ package hooks;
 import base.PlaywrightFactory;
 import com.microsoft.playwright.Page;
 import context.TestContext;
+import enums.ConfigProperties;
 import io.cucumber.java.After;
 import io.cucumber.java.Before;
-import utils.ConfigReader;
+import utils.PropertiesUtil;
 
 public class Hooks {
 
@@ -24,7 +25,7 @@ public class Hooks {
 
         testContext.setPage(page);
 
-        page.navigate(ConfigReader.get("baseUrl"));
+        page.navigate(PropertiesUtil.getValue(ConfigProperties.BASEURL));
     }
 
     @After

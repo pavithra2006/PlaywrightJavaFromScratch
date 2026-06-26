@@ -1,17 +1,10 @@
 package page;
 
-import base.BasePage;
 import com.microsoft.playwright.Page;
 import utils.WaitUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 
 public class LoginPage extends BasePage {
-
-    private static final Logger logger =
-                LoggerFactory.getLogger(LoginPage.class);
-
     private final String txtUsername =
             "//input[@name='username']";
 
