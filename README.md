@@ -183,3 +183,11 @@ for each thread.
 
 Parallel execution - uses Cucumber dataprovider thread count, so configure in pom.xml surefire plugin
 dataproviderthreadcount = 2
+
+To view traceviewer files use below link and drag and drop trace zip files
+https://trace.playwright.dev/
+
+Video recording on failure 
+webm - developed by google 2010, these are smaller than MP4
+
+MDC logging (Mapped Diagnostic Context) is a technique in Java logging that allows developers to attach contextual information to log messages, making it easier to trace and analyze logs in multi-threaded or distributed applications.

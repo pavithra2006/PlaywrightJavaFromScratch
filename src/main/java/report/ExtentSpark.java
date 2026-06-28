@@ -22,7 +22,7 @@ public final class ExtentSpark { // no need to extend it
     public static void initReports() {
         if (Objects.isNull(extent)) { // if we call this method twice null check avoids the problem
             extent = new ExtentReports(); // object for extent report
-            ExtentSparkReporter spark = new ExtentSparkReporter(FrameworkConstants.getExtentReportFilesPath());
+            ExtentSparkReporter spark = new ExtentSparkReporter(FrameworkConstants.getReportPath());
             //gets generated in root folder // obj for extent spark reporter class
             spark.config().setTheme(Theme.STANDARD);
             spark.config().setDocumentTitle("Automation test report");      // tab name

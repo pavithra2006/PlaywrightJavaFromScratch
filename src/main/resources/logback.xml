@@ -47,7 +47,7 @@
                 %n          -> New line
             -->
             <pattern>
-                %d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n
+                %d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] [%X{scenario}] %-5level %logger{36} - %msg%n
             </pattern>
         </encoder>
     </appender>
@@ -56,7 +56,7 @@
         <encoder>
             <!--Shorter format for IntelliJ Console.-->
             <pattern>
-                %d{HH:mm:ss.SSS} %-5level %logger{20} - %msg%n
+                %d{yyyy-MM-dd HH:mm:ss} [%thread] [%X{scenario}] %-5level %logger - %msg%n
             </pattern>
         </encoder>
     </appender>
