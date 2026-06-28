@@ -1,4 +1,0 @@
-2026-06-26 22:08:28.259 [main] INFO  page.LoginPage - Performed fill action on: //input[@name='username'], with value: Admin
-2026-06-26 22:08:28.340 [main] INFO  page.LoginPage - Performed fill action on: //input[@name='password'], with value: admin123
-2026-06-26 22:08:29.693 [main] INFO  page.LoginPage - Clicked //button[@type='submit'] locator successfully
-2026-06-26 22:08:30.272 [main] INFO  page.HomePage - Is dashboard header displayed: true

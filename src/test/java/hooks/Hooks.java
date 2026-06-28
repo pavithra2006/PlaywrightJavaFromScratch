@@ -36,11 +36,14 @@ public class Hooks {
 
     @After
     public void tearDown(Scenario scenario) {
+        String path;
         if (scenario.isFailed()) {
-            String path =ScreenshotUtil.capture(scenario.getName());
+            path = ScreenshotUtil.capture(scenario.getName());
             ExtentSpark.getTest().fail("Scenario Failed: " + scenario.getName()).addScreenCaptureFromPath(path);
         } else {
-            ExtentLogger.pass("Scenario Passed: "  + scenario.getName());
+            path = ScreenshotUtil.capture(scenario.getName());
+            ExtentSpark.getTest().addScreenCaptureFromPath(path);
+            ExtentLogger.pass("Scenario Passed: " + scenario.getName());
         }
         ExtentSpark.flushReport();
         //quit browser

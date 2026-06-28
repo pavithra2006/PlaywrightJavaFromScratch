@@ -9,13 +9,11 @@ import java.nio.file.Paths;
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public final class ScreenshotUtil {
     public static String capture(String fileName){
-        String path =
-                "screenshots/" + fileName + ".png";
+        String path = Paths.get("screenshots", fileName + ".png").toAbsolutePath().toString();
         PlaywrightFactory.getPage().screenshot(
                 new Page.ScreenshotOptions()
                         .setPath(Paths.get(path))
                         .setFullPage(true));
-
         return path;
 
     }

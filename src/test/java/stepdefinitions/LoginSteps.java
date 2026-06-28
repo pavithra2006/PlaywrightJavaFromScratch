@@ -1,6 +1,7 @@
 package stepdefinitions;
 
 import context.TestContext;
+import io.cucumber.java.en.And;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import org.testng.Assert;
@@ -22,16 +23,20 @@ public class LoginSteps {
     }
 
     @When("User logs in with username {string} and password {string}")
-    public void user_logs_in_with_username_and_password(String user,
-                                                        String password) {
-
+    public void user_logs_in_with_username_and_password(String user, String password) {
+        Assert.assertTrue(loginPage.loginPgHeaderDisplayed());
         loginPage.login(user, password);
     }
 
     @Then("Dashboard should be displayed")
     public void dashboard_should_be_displayed() {
+        Assert.assertTrue(homePage.isDashboardDisplayed());
+    }
 
-        Assert.assertTrue(
-                homePage.isDashboardDisplayed());
+    @And("Verify logout is successful")
+    public void verify_logout_is_successfull() {
+        loginPage.logout();
+        Assert.assertTrue(loginPage.loginPgHeaderDisplayed());
+        Assert.assertFalse(homePage.isDashboardDisplayed());
     }
 }

@@ -30,4 +30,10 @@ public class BasePage {
         logger.info("Text content on locator: {}, with value: {} " , locator,text);
         return text;
     }
+
+    protected boolean isDisplayed(String locator){
+        boolean isVisible = page.locator(locator).isVisible();
+        logger.info("{} locator is visible: {}", locator,isVisible);
+        return isVisible ;
+    }
 }
