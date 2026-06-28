@@ -37,5 +37,6 @@ build/
 ### Mac OS ###
 .DS_Store
 
-/extent-test-output
-/logs
+/extent-test-output/
+/logs/
+

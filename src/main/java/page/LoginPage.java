@@ -13,6 +13,7 @@ public class LoginPage extends BasePage {
     private final String picProfile = "//header[@class='oxd-topbar']//img[@alt='profile picture']";
     private final String btnLogout = "//a[text()='Logout']";
     private final String loginPgHeader = "//div[@class='orangehrm-login-branding']";
+    private final String toastMsg = "//p[contains(@class,'alert-content')]";
 
     public LoginPage(Page page) {
         super(page);
@@ -38,6 +39,13 @@ public class LoginPage extends BasePage {
 
     public boolean loginPgHeaderDisplayed() {
         WaitUtils.waitForSelector(page, loginPgHeader);
-        return isDisplayed(loginPgHeader);
+        return isDisplayed(loginPgHeader, true);
+    }
+
+    public String verifyToastMessage(){
+        isDisplayed(toastMsg, true);
+        String toastMsgContent = getText(toastMsg);
+        ExtentLogger.info("Toast message content: " + toastMsgContent);
+        return toastMsgContent;
     }
 }

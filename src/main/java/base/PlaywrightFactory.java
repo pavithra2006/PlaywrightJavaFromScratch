@@ -6,6 +6,8 @@ import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import utils.PropertiesUtil;
 
+import java.nio.file.Paths;
+
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public final class PlaywrightFactory {
 
@@ -19,7 +21,13 @@ public final class PlaywrightFactory {
         browser.set(
                 playwright.get().chromium().launch(
                         new BrowserType.LaunchOptions().setHeadless(Boolean.parseBoolean(PropertiesUtil.getValue(ConfigProperties.HEADLESS)))));
-        context.set(browser.get().newContext());
+        context.set(browser.get().newContext(new Browser.NewContextOptions().setRecordVideoDir(Paths.get("videos"))));
+        context.get().tracing().start(
+                new Tracing.StartOptions()
+                        .setScreenshots(true)
+                        .setSnapshots(true)
+                        .setSources(true)
+        );
         page.set(context.get().newPage());
     }
 
@@ -49,6 +57,7 @@ public final class PlaywrightFactory {
             playwright.get().close();
             playwright.remove();
         }
+
     }
 }
 //here page, browsercontext and browser --> all are not thread safe

@@ -31,9 +31,9 @@ public class BasePage {
         return text;
     }
 
-    protected boolean isDisplayed(String locator){
-        boolean isVisible = page.locator(locator).isVisible();
-        logger.info("{} locator is visible: {}", locator,isVisible);
-        return isVisible ;
+    protected boolean isDisplayed(String locator, boolean expectedVisible) {
+        boolean actualVisible = page.locator(locator).isVisible();
+        logger.info("{} locator visibility: {}", locator, actualVisible);
+        return actualVisible == expectedVisible;
     }
 }

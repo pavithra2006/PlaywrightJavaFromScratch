@@ -150,3 +150,36 @@ Centralized Wait Strategy
 Faker-based Test Data Generation
 Request/Response Logging
 AI-assisted Self-Healing Locator Layer
+mdc scenario login
+
+Notes
+SLF4J = Logging API (interface/facade)
+Logback/Log4j2 = Logging implementation
+Your Framework
+│
+logger.info("Login Successful")
+│
+▼
+SLF4J API
+│
+▼
+Logback
+│
+▼
+Console + automation.log
+
+About TestNG:
+TestNg- Creates worker threads.
+↓
+DataProvider- Distributes scenarios to those threads.
+↓
+Your ThreadLocal- Creates:
+Playwright
+Browser
+BrowserContext
+Page
+
+for each thread.
+
+Parallel execution - uses Cucumber dataprovider thread count, so configure in pom.xml surefire plugin
+dataproviderthreadcount = 2
