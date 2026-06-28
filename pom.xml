@@ -64,7 +64,6 @@
             <artifactId>extentreports</artifactId>
             <version>${extent.version}</version>
         </dependency>
-
         <!-- Logging -->
         <dependency>
             <groupId>org.slf4j</groupId>

@@ -1,27 +1,23 @@
 package utils;
 
 import base.PlaywrightFactory;
+import com.microsoft.playwright.Page;
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
 import java.nio.file.Paths;
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
+public final class ScreenshotUtil {
+    public static String capture(String fileName){
+        String path =
+                "screenshots/" + fileName + ".png";
+        PlaywrightFactory.getPage().screenshot(
+                new Page.ScreenshotOptions()
+                        .setPath(Paths.get(path))
+                        .setFullPage(true));
 
-public class ScreenshotUtil {
+        return path;
 
-    public static String captureScreenshot(
-            String fileName) throws IOException {
-
-        byte[] screenshot =
-                PlaywrightFactory.getPage()
-                        .screenshot();
-
-        Path path =
-                Paths.get("reports/screenshots/"
-                        + fileName + ".png");
-
-        Files.write(path,screenshot);
-
-        return path.toString();
     }
+
 }

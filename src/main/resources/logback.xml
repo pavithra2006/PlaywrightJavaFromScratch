@@ -2,77 +2,43 @@
 
 <configuration>
 
-    <!--
-        Logback Configuration
+    <!--Logback Configuration
 
-        Appender:
-        An Appender decides WHERE logs are written.
+        Appender:An Appender decides WHERE logs are written.
         Examples:
             FileAppender      -> Writes logs to a file
             ConsoleAppender   -> Prints logs in IntelliJ/Terminal
             RollingFileAppender -> Creates/archives log files automatically
 
-        Encoder:
-        Decides HOW logs are formatted.
-
-        Logger:
-        Decides WHICH logs should be printed.
-
-        Root:
-        Default logger used by the entire application.
+        Encoder:Decides HOW logs are formatted.
+        Logger:Decides WHICH logs should be printed.
+        Root: Default logger used by the entire application.
     -->
-
-
     <!--
-        Creates a timestamp once when execution starts.
-
-        Used to generate a unique log file.
-
-        Example:
-            automation-2026-06-26_22-45-30.log
+        Creates a timestamp once when execution starts.Used to generate a unique log file.
+        Example:automation-2026-06-26_22-45-30.log
     -->
     <timestamp key="runDate"
                datePattern="yyyy-MM-dd_HH-mm-ss"/>
-
 
     <!-- ================= FILE APPENDER ================= -->
 
     <appender name="FILE"
               class="ch.qos.logback.core.FileAppender">
-
         <!--
-            One log file per execution.
-
-            Every execution creates
-
-            logs/
-                automation-2026-06-26_22-45-30.log
-
-            instead of
-
-                automation.log
+            One log file per execution.Every execution creates logs/automation-2026-06-26_22-45-30.log instead of automation.log
         -->
         <file>logs/automation-${runDate}.log</file>
 
         <!--
-            append=true
-                If file exists,
-                continue writing to same file.
-
-            append=false
-                Create a fresh log file.
-
-            Since filename already contains timestamp,
-            append=false is recommended.
+            append=true==>If file exists, continue writing to same file.
+            append=false==>Create a fresh log file.
+            Since filename already contains timestamp, append=false is recommended.
         -->
         <append>false</append>
-
-
         <encoder>
-
             <!--
                 Log Pattern
-
                 %d          -> Date
                 %thread     -> Thread name
                 %-5level    -> INFO/WARN/ERROR
@@ -80,69 +46,34 @@
                 %msg        -> Log message
                 %n          -> New line
             -->
-
             <pattern>
                 %d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n
             </pattern>
-
         </encoder>
-
     </appender>
-
-
     <!-- ================= CONSOLE APPENDER ================= -->
-
-    <appender name="CONSOLE"
-              class="ch.qos.logback.core.ConsoleAppender">
-
+    <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
         <encoder>
-
-            <!--
-                Shorter format for IntelliJ Console.
-            -->
-
+            <!--Shorter format for IntelliJ Console.-->
             <pattern>
                 %d{HH:mm:ss.SSS} %-5level %logger{20} - %msg%n
             </pattern>
-
         </encoder>
-
     </appender>
-
-
     <!--
-        Suppress unnecessary TestNG INFO logs.
-
-        Without this you will see
-
-        INFO org.testng.internal.Utils
-        Running:
-        temp-testng.xml
-
-        in every execution.
+        Suppress unnecessary TestNG INFO logs.  Without this you will see
+  INFO org.testng.internal.Utils
+        Running: temp-testng.xml  in every execution.
     -->
-
-    <logger name="org.testng"
-            level="WARN"/>
-
-
+    <logger name="org.testng" level="WARN"/>
     <!--
         Root Logger
-
         Every INFO log goes to
-
         ✓ File
-        ✓ Console
-
-        unless another logger overrides it.
+        ✓ Console unless another logger overrides it.
     -->
-
     <root level="INFO">
-
         <appender-ref ref="FILE"/>
-
         <appender-ref ref="CONSOLE"/>
-
     </root>
-
 </configuration>

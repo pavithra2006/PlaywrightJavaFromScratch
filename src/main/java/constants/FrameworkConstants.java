@@ -12,10 +12,9 @@ public final class FrameworkConstants {
     private static final String CONFIGFILEPATH = RESOURCESPATH + "/config/config.properties";
     //these variables cant be modified from anywhere, only through getters we can get value
     private static final String EXTENTREPORTSFOLDERPATH = System.getProperty("user.dir") + "/extent-test-output";
-
     private static String extentReportFilesPath = "";
 
-//    private static final int EXPLICITWAIT = 20;
+    //    private static final int EXPLICITWAIT = 20;
     public static String getConfigFilePath() {
         //getter method
         return CONFIGFILEPATH;
@@ -25,20 +24,19 @@ public final class FrameworkConstants {
 //        return EXPLICITWAIT;
 //    }
 
-//    public static String getExtentReportFilesPath() {
-//        if (extentReportFilesPath.isEmpty()) {
-//            extentReportFilesPath = getExtentReportsPath();
-//            return extentReportFilesPath;
-//        } else {
-//            return extentReportFilesPath;
-//        }
-//    }
-//
-//    private static String getExtentReportsPath() {
+    public static String getExtentReportFilesPath() {
+        if (extentReportFilesPath.isEmpty()) {
+            extentReportFilesPath = getExtentReportsPath();
+            return extentReportFilesPath;
+        } else {
+            return extentReportFilesPath;
+        }
+    }
+
+    private static String getExtentReportsPath() {
 //        if (PropertiesUtil.getValue(ConfigProperties.OVERRIDEREPORTS).equalsIgnoreCase("no"))
-//            return EXTENTREPORTSFOLDERPATH + "/" + System.currentTimeMillis() + "/index.html";
+        return EXTENTREPORTSFOLDERPATH + "/" + System.currentTimeMillis() + "/index.html";
 //        else
 //            return EXTENTREPORTSFOLDERPATH + "/" + "index.html";
-//    }
-
+    }
 }
