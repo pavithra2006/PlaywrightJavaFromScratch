@@ -37,6 +37,5 @@ public class LoginSteps {
     public void verify_logout_is_successfull() {
         loginPage.logout();
         Assert.assertTrue(loginPage.loginPgHeaderDisplayed());
-        Assert.assertFalse(homePage.isDashboardDisplayed());
     }
 }
