@@ -20,7 +20,7 @@ public final class ExtentManager {
             extTest.set(ext);
     }
 
-    static void unloadTest() {
+   public static void unloadTest() {
         extTest.remove();
     }
 

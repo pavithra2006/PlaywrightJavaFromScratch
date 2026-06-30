@@ -4,10 +4,13 @@ import com.aventstack.extentreports.ExtentReports;
 import com.aventstack.extentreports.ExtentTest;
 import com.aventstack.extentreports.reporter.ExtentSparkReporter;
 import com.aventstack.extentreports.reporter.configuration.Theme;
+import com.microsoft.playwright.Playwright;
 import enums.CategoryType;
 import constants.FrameworkConstants;
+import enums.ConfigProperties;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
+import utils.PropertiesUtil;
 
 import java.awt.*;
 import java.io.File;
@@ -28,6 +31,12 @@ public final class ExtentSpark { // no need to extend it
             spark.config().setDocumentTitle("Automation test report");      // tab name
             spark.config().setReportName("Orange HRM portal testing"); // found in top right side
             extent.attachReporter(spark);
+
+            extent.setSystemInfo("Browser", PropertiesUtil.getValue(ConfigProperties.BROWSER));
+            extent.setSystemInfo("Environment", PropertiesUtil.getValue(ConfigProperties.ENVIRONMENT));
+            extent.setSystemInfo("OS", System.getProperty("os.name"));
+            extent.setSystemInfo("Java version", System.getProperty("java.version"));
+            extent.setSystemInfo("Playwright version", Playwright.class.getPackage().getImplementationVersion());
         }
     }
     public static void createTest(String testName) {
@@ -39,32 +48,9 @@ public final class ExtentSpark { // no need to extend it
     }
 
     public static void flushReport() {
-        extent.flush(); // flush ExtentReport variable
-        ExtentManager.unloadTest(); // flush ExtentReport Threadlocal variable
+        if (extent != null) {
 
+            extent.flush(); // flush ExtentReport variable
+        }
     }
-
-//    public static void flushReports() {
-//        if (Objects.nonNull(extent)) {
-//            extent.flush();
-//        }
-//        ExtentManager.unloadExtTest();
-//
-//    }
-//
-//    public static void createTest(String testCaseName) {
-//        ExtentManager.setExtTest(extent.createTest(testCaseName));
-//    }
-
-//    public static void addAuthors(String[] authors) {
-//        for (String author : authors) {
-//            ExtentManager.getExtTest().assignAuthor(author);
-//        }
-//    }
-//
-//    public static void addCategories(CategoryType[] categories) {
-//        for (CategoryType category : categories) {
-//            ExtentManager.getExtTest().assignCategory(category.toString());
-//        }
-//    }
 }
