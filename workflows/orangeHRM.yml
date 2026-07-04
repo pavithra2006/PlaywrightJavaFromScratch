@@ -8,75 +8,212 @@ on:
 
   pull_request:
 
+  workflow_dispatch:
+
   schedule:
     - cron: "0 14 * * *"
 
-  workflow_dispatch:
+permissions:
+  contents: read
+  pages: write
+  id-token: write
 
 jobs:
 
-  ui-tests:
+  automation:
 
     runs-on: ubuntu-latest
 
     timeout-minutes: 30
 
+    strategy:
+
+      fail-fast: false
+
+      matrix:
+
+        browser:
+
+          - chromium
+          - firefox
+          - webkit
+
     steps:
 
-      - name: Checkout
-        uses: actions/checkout@v4
+      ############################################################
+      # Checkout
+      ############################################################
 
-      - name: Setup Java
-        uses: actions/setup-java@v4
+      - uses: actions/checkout@v4
+
+      ############################################################
+      # Java
+      ############################################################
+
+      - uses: actions/setup-java@v4
+
         with:
+
           distribution: temurin
+
           java-version: 17
+
           cache: maven
 
-      - name: Install Playwright Browsers
+      ############################################################
+      # Cache Playwright Browsers
+      ############################################################
+
+      - uses: actions/cache@v4
+
+        with:
+
+          path: ~/.cache/ms-playwright
+
+          key: playwright-${{ runner.os }}-${{ hashFiles('pom.xml') }}
+
+      ############################################################
+      # Install Browsers
+      ############################################################
+
+      - name: Install Browsers
+
         run: mvn exec:java -Dexec.mainClass=com.microsoft.playwright.CLI -Dexec.args="install"
 
-      - name: Execute Tests
-        run: mvn clean test
+      ############################################################
+      # Main Suite
+      ############################################################
 
-      - name: Upload Extent Report
+      - name: Execute Main Suite
+
+        run: |
+
+          mvn clean test -Dbrowser=${{ matrix.browser }}
+
+      ############################################################
+      # Retry Failed Scenarios
+      ############################################################
+
+      - name: Retry Failed Scenarios
+
         if: always()
-        uses: actions/upload-artifact@v4
+
+        run: |
+
+          if [ -f target/failed_scenarios.txt ] && [ -s target/failed_scenarios.txt ]
+          then
+            echo "Retrying failed scenarios..."
+            mvn test -Dtest=FailureRunner -Dbrowser=${{ matrix.browser }}
+          else
+            echo "No failed scenarios."
+          fi
+
+      ############################################################
+      # Upload Report
+      ############################################################
+
+      - uses: actions/upload-artifact@v4
+
+        if: always()
+
         with:
-          name: ExtentReport
+
+          name: ExtentReport-${{ matrix.browser }}
+
           path: extent-test-output/
 
-      - name: Upload Screenshots
+      ############################################################
+      # Upload Logs
+      ############################################################
+
+      - uses: actions/upload-artifact@v4
+
         if: always()
-        uses: actions/upload-artifact@v4
+
         with:
-          name: Screenshots
+
+          name: Logs-${{ matrix.browser }}
+
+          path: logs/
+
+      ############################################################
+      # Upload Screenshots
+      ############################################################
+
+      - uses: actions/upload-artifact@v4
+
+        if: always()
+
+        with:
+
+          name: Screenshots-${{ matrix.browser }}
+
           path: screenshots/
 
-      - name: Upload Videos
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: Videos
-          path: videos/
+      ############################################################
+      # Upload Failure Artifacts
+      ############################################################
 
-      - name: Upload Traces
-        if: always()
-        uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v4
+
+        if: failure()
+
         with:
-          name: Traces
+
+          name: Trace-${{ matrix.browser }}
+
           path: traces/
 
-      - name: Upload HAR
-        if: always()
-        uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v4
+
+        if: failure()
+
         with:
-          name: HAR
+
+          name: Videos-${{ matrix.browser }}
+
+          path: videos/
+
+      - uses: actions/upload-artifact@v4
+
+        if: failure()
+
+        with:
+
+          name: HAR-${{ matrix.browser }}
+
           path: har/
 
-      - name: Upload Logs
+      ############################################################
+      # GitHub Pages
+      ############################################################
+
+      - name: Upload Pages Artifact
+
         if: always()
-        uses: actions/upload-artifact@v4
+
+        uses: actions/upload-pages-artifact@v3
+
         with:
-          name: Logs
-          path: logs/
+
+          path: extent-test-output/
+
+  deploy:
+
+    needs: automation
+
+    runs-on: ubuntu-latest
+
+    if: always()
+
+    environment:
+
+      name: github-pages
+
+      url: ${{ steps.deployment.outputs.page_url }}
+
+    steps:
+
+      - id: deployment
+
+        uses: actions/deploy-pages@v4
