@@ -48,7 +48,7 @@ public class Hooks {
                         + " | "
                         + Thread.currentThread().getName());
 
-        PlaywrightFactory.initBrowser(ConfigProperties.BROWSER);
+        PlaywrightFactory.initBrowser(PropertiesUtil.getValue(ConfigProperties.BROWSER), scenario.getName());
 
         Page page = PlaywrightFactory.getPage();
 
@@ -100,6 +100,7 @@ public class Hooks {
 
         if (!scenario.isFailed()) {
             Files.deleteIfExists(testContext.getPage().video().path());
+//            Files.deleteIfExists(Paths.get(FrameworkConstants.getHarFile(scenario.getName())));
         }
 
         ExtentManager.unloadTest(); // flush ExtentReport Threadlocal variable

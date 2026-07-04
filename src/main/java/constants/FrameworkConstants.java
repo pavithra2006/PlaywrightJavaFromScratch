@@ -1,7 +1,5 @@
 package constants;
 
-import enums.ConfigProperties;
-import utils.PropertiesUtil;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import utils.RunManager;
@@ -53,5 +51,9 @@ public final class FrameworkConstants {
 
     public static String getLogFile() {
         return OUTPUT_FOLDER + "/logs/automation.log";
+    }
+
+    public static String getHarFilePath(String scenarioName) {
+        return OUTPUT_FOLDER + "/har/" + scenarioName + "/network.har";
     }
 }

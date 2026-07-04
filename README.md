@@ -1,4 +1,6 @@
-Framework Features
+# Playwright Java Automation Framework
+
+## Features
 
 ✅ Playwright Java
 
@@ -14,13 +16,15 @@ Framework Features
 
 ✅ Environment Support (QA/UAT/PROD)
 
-✅ Extent Reports (most commonly used)
+✅ Extent Reports
 
-✅ Screenshot on Failure
+✅ Video recording, HAR, traces on Failure
 
 ✅ Logging (SLF4J + Logback)
 
 ✅ Hooks
+
+✅ ThreadLocal
 
 ✅ Parallel Execution
 
@@ -30,77 +34,16 @@ Framework Features
 
 ✅ Base Classes
 
-✅ GitHub Actions/Jenkins Ready
-
-
-
-playwright-java-framework
-│
-├── src
-│   ├── main
-│   │   ├── java
-│   │   │   ├── base
-│   │   │   │    ├── PlaywrightFactory.java
-│   │   │   │    └── BasePage.java
-│   │   │   │
-│   │   │   ├── pages
-│   │   │   │    ├── LoginPage.java
-│   │   │   │    └── HomePage.java
-│   │   │   │
-│   │   │   ├── utils
-│   │   │   │    ├── ConfigReader.java
-│   │   │   │    ├── ScreenshotUtil.java
-│   │   │   │    ├── WaitUtils.java
-│   │   │   │    └── ExtentManager.java
-│   │   │   │
-│   │   │   └── constants
-│   │   │        └── FrameworkConstants.java
-│   │
-│   └── resources
-│        ├── config
-│        │     └── config.properties
-│        └── logback.xml
-│
-├── src/test
-│   ├── java
-│   │    ├── stepdefinitions
-│   │    │      └── LoginSteps.java
-│   │    │
-│   │    ├── runners
-│   │    │      └── TestRunner.java
-│   │    │
-│   │    ├── hooks
-│   │    │      └── Hooks.java
-│   │    │
-│   │    └── listeners
-│   │           └── RetryListener.java
-│   │
-│   └── resources
-│         └── features
-│               └── Login.feature
-│
-├── reports
-│
-├── test-output
-│
-├── pom.xml
-│
-├── testng.xml
-│
-└── README.md
-
-
-
-# Playwright Java Automation Framework
+✅ GitHub Actions
 
 ## Tech Stack
 
-- Playwright Java
+- Playwright Java 
 - TestNG
 - Cucumber
 - Maven
 - Extent Reports
-- Logback
+- SLF4J + Logback
 
 ## Design Pattern
 
@@ -116,20 +59,22 @@ playwright-java-framework
 - Detailed Reporting
 - Thread Safe Execution
 
+## Folder structure
+-src
+-main
+-test
+-reports
+-logs
 ## Run Tests
 
 mvn clean test
 
-## Run Specific Environment
-
-mvn clean test -Denvironment=qa
-
 ## Generate Reports
 
-reports/ExtentReport.html
+test-output/
 
 
-IMPROVEMENTS
+## IMPROVEMENTS
 Generic Playwright Actions Layer (ElementActions)
 API Layer (RestAssured)
 Database Utilities
@@ -143,16 +88,13 @@ Docker Support
 GitHub Actions
 BrowserStack/SauceLabs Integration
 Trace Viewer Collection
-Video Recording on Failure
 Soft Assertions
-Custom Exceptions
 Centralized Wait Strategy
 Faker-based Test Data Generation
 Request/Response Logging
 AI-assisted Self-Healing Locator Layer
-mdc scenario login
 
-Notes
+## Notes
 SLF4J = Logging API (interface/facade)
 Logback/Log4j2 = Logging implementation
 Your Framework
@@ -168,7 +110,7 @@ Logback
 ▼
 Console + automation.log
 
-About TestNG:
+## About TestNG:
 TestNg- Creates worker threads.
 ↓
 DataProvider- Distributes scenarios to those threads.
@@ -181,13 +123,19 @@ Page
 
 for each thread.
 
-Parallel execution - uses Cucumber dataprovider thread count, so configure in pom.xml surefire plugin
+## Parallel execution 
+uses Cucumber dataprovider thread count, so configure in pom.xml surefire plugin
 dataproviderthreadcount = 2
 
 To view traceviewer files use below link and drag and drop trace zip files
 https://trace.playwright.dev/
 
-Video recording on failure 
+## Video recording on failure 
 webm - developed by google 2010, these are smaller than MP4
 
-MDC logging (Mapped Diagnostic Context) is a technique in Java logging that allows developers to attach contextual information to log messages, making it easier to trace and analyze logs in multi-threaded or distributed applications.
+## MDC logging (Mapped Diagnostic Context)
+Is a technique in Java logging that allows developers to attach contextual information to log messages, making it easier to trace and analyze logs in multi-threaded or distributed applications.
+
+## HAR recording
+HAR = HTTP Archive
+It is a record of all network traffic between the browser and the server during test execution.
