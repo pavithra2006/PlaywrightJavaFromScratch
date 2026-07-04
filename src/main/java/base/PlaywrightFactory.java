@@ -61,9 +61,9 @@ public final class PlaywrightFactory {
         return new Browser.NewContextOptions()
                 .setRecordVideoDir(
                         Paths.get(FrameworkConstants.getVideoFolder())).setViewportSize(1920, 1080)
-                .setIgnoreHTTPSErrors(true).setLocale("en-IN")
-                .setTimezoneId("Asia/Kolkata").setColorScheme(ColorScheme.DARK)
-                .setPermissions(List.of("clipboard-read", "camera", "microphone"))
+//                .setIgnoreHTTPSErrors(true).setLocale("en-IN")
+//                .setTimezoneId("Asia/Kolkata").setColorScheme(ColorScheme.DARK)
+//                .setPermissions(List.of("clipboard-read", "camera", "microphone"))
                 .setRecordHarPath(Paths.get(FrameworkConstants.getHarFilePath(scenarioName)))
                 .setUserAgent("UAT Automation testing");
 //                .setBaseURL(PropertiesUtil.getValue(ConfigProperties.BASEURL));
@@ -71,6 +71,7 @@ public final class PlaywrightFactory {
     //setViewportSize - horizontal , vertical height
     //without setIgnoreHTTPError - Your connection is not private
     //setLocale - useful while validating date, currency , language
+
 
 
     //thread local variables are private final -so use getters
