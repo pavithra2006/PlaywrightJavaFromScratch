@@ -6,30 +6,10 @@ on:
     branches:
       - main
 
-  pull_request:
-
   workflow_dispatch:
 
-    inputs:
-
-      browser:
-
-        description: Browser
-
-        required: true
-
-        default: chromium
-
-        type: choice
-
-        options:
-
-          - chromium
-
-          -  firefox
-
-          - webkit
   schedule:
+    # 7:30 PM IST
     - cron: "0 14 * * *"
 
 permissions:
@@ -43,7 +23,7 @@ jobs:
 
     runs-on: ubuntu-latest
 
-    timeout-minutes: 30
+    timeout-minutes: 40
 
     strategy:
 
@@ -59,163 +39,87 @@ jobs:
 
     steps:
 
-      ############################################################
+      ####################################################
       # Checkout
-      ############################################################
+      ####################################################
 
       - uses: actions/checkout@v4
 
-      ############################################################
+      ####################################################
       # Java
-      ############################################################
+      ####################################################
 
       - uses: actions/setup-java@v4
-
         with:
-
           distribution: temurin
-
           java-version: 17
-
           cache: maven
 
-      ############################################################
+      ####################################################
       # Cache Playwright Browsers
-      ############################################################
+      ####################################################
 
       - uses: actions/cache@v4
-
         with:
-
           path: ~/.cache/ms-playwright
-
           key: playwright-${{ runner.os }}-${{ hashFiles('pom.xml') }}
+          restore-keys: |
+            playwright-${{ runner.os }}
 
-      ############################################################
+      ####################################################
       # Install Browsers
-      ############################################################
+      ####################################################
 
-      - name: Install Browsers
-
-        run: mvn exec:java -Dexec.mainClass=com.microsoft.playwright.CLI -Dexec.args="install"
-
-      ############################################################
-      # Main Suite
-      ############################################################
-
-      - name: Execute Main Suite
-
+      - name: Install Playwright Browsers
         run: |
+          mvn exec:java \
+          -Dexec.mainClass=com.microsoft.playwright.CLI \
+          -Dexec.args="install"
 
-          mvn clean test -Dbrowser=${{ matrix.browser }}
+      ####################################################
+      # Execute Tests
+      ####################################################
 
-      ############################################################
+      - name: Execute Tests
+        run: |
+          mvn clean test \
+          -Dbrowser=${{ matrix.browser }}
+
+      ####################################################
       # Retry Failed Scenarios
-      ############################################################
+      ####################################################
 
       - name: Retry Failed Scenarios
-
         if: always()
-
         run: |
-
-          if [ -f target/failed_scenarios.txt ] && [ -s target/failed_scenarios.txt ]
-          then
-            echo "Retrying failed scenarios..."
-            mvn test -Dtest=FailureRunner -Dbrowser=${{ matrix.browser }}
+          if [ -f target/failedrerun.txt ] && [ -s target/failedrerun.txt ]; then
+            mvn test \
+            -Dtest=FailedRunner \
+            -Dbrowser=${{ matrix.browser }}
           else
             echo "No failed scenarios."
           fi
 
-      ############################################################
-      # Upload Report
-      ############################################################
+      ####################################################
+      # Upload Complete Execution Folder
+      ####################################################
 
-      - uses: actions/upload-artifact@v4
-
+      - name: Upload Test Output
         if: always()
-
+        uses: actions/upload-artifact@v4
         with:
+          name: TestOutput-${{ matrix.browser }}
+          path: test-output/
 
-          name: ExtentReport-${{ matrix.browser }}
+      ####################################################
+      # Publish ONLY Chromium Report
+      ####################################################
 
-          path: extent-test-output/
-
-      ############################################################
-      # Upload Logs
-      ############################################################
-
-      - uses: actions/upload-artifact@v4
-
-        if: always()
-
-        with:
-
-          name: Logs-${{ matrix.browser }}
-
-          path: logs/
-
-      ############################################################
-      # Upload Screenshots
-      ############################################################
-
-      - uses: actions/upload-artifact@v4
-
-        if: always()
-
-        with:
-
-          name: Screenshots-${{ matrix.browser }}
-
-          path: screenshots/
-
-      ############################################################
-      # Upload Failure Artifacts
-      ############################################################
-
-      - uses: actions/upload-artifact@v4
-
-        if: failure()
-
-        with:
-
-          name: Trace-${{ matrix.browser }}
-
-          path: traces/
-
-      - uses: actions/upload-artifact@v4
-
-        if: failure()
-
-        with:
-
-          name: Videos-${{ matrix.browser }}
-
-          path: videos/
-
-      - uses: actions/upload-artifact@v4
-
-        if: failure()
-
-        with:
-
-          name: HAR-${{ matrix.browser }}
-
-          path: har/
-
-      ############################################################
-      # GitHub Pages
-      ############################################################
-
-      - name: Upload Pages Artifact
-
-        if: always()
-
+      - name: Upload GitHub Pages Artifact
+        if: always() && matrix.browser == 'chromium'
         uses: actions/upload-pages-artifact@v3
-
         with:
-
-          path: extent-test-output/
+          path: test-output/latest
 
   deploy:
 
@@ -226,13 +130,10 @@ jobs:
     if: always()
 
     environment:
-
       name: github-pages
-
       url: ${{ steps.deployment.outputs.page_url }}
 
     steps:
 
       - id: deployment
-
         uses: actions/deploy-pages@v4

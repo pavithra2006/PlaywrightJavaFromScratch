@@ -48,6 +48,9 @@ public class Hooks {
         String browser = System.getProperty(
                 "browser",
                 PropertiesUtil.getValue(ConfigProperties.BROWSER));
+        //Check if a JVM system property named "browser" exists.
+        //If it exists, use that value.
+        //If it does not exist, use the second argument as the default value.
 
         PlaywrightFactory.initBrowser(browser, scenario.getName());
 //        PlaywrightFactory.initBrowser(PropertiesUtil.getValue(ConfigProperties.BROWSER), scenario.getName());

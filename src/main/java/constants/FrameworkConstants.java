@@ -4,6 +4,8 @@ import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import utils.RunManager;
 
+import java.io.File;
+
 //no object can be created
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public final class FrameworkConstants {
@@ -11,9 +13,11 @@ public final class FrameworkConstants {
     private static final String CONFIGFILEPATH = RESOURCESPATH + "/config/config.properties";
     //these variables cant be modified from anywhere, only through getters we can get value
     private static final String EXTENTREPORTSFOLDERPATH = System.getProperty("user.dir") + "/extent-test-output";
-    public static final String OUTPUT_FOLDER =System.getProperty("user.dir")+ "/test-output/"+ RunManager.getRunId();
+//    public static final String OUTPUT_FOLDER =System.getProperty("user.dir")+ "/test-output/"+ RunManager.getRunId();
     private static String extentReportFilesPath = "";
-
+    private static final String RUN_FOLDER =
+            "test-output" + File.separator + RunManager.getRunId();
+    private static final String OUTPUT_FOLDER = "test-output";
     //    private static final int EXPLICITWAIT = 20;
     public static String getConfigFilePath() {
         //getter method
@@ -55,5 +59,19 @@ public final class FrameworkConstants {
 
     public static String getHarFilePath(String scenarioName) {
         return OUTPUT_FOLDER + "/har/" + scenarioName + ".har";
+    }
+
+
+
+    public static String getRunFolder() {
+        return RUN_FOLDER;
+    }
+
+    public static String getLatestReportFolder() {
+        return OUTPUT_FOLDER + File.separator + "latest";
+    }
+
+    public static String getLatestReportPath() {
+        return getLatestReportFolder() + File.separator + "index.html";
     }
 }

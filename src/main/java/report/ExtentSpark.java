@@ -14,6 +14,10 @@ import utils.PropertiesUtil;
 import java.awt.*;
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.util.Objects;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
@@ -55,8 +59,27 @@ public final class ExtentSpark { // no need to extend it
     }
 
     public static void flushReport() {
+
         if (extent != null) {
-            extent.flush(); // flush ExtentReport variable
+            extent.flush();
         }
+
+        try {
+
+            Path latestFolder =
+                    Paths.get(FrameworkConstants.getLatestReportFolder());
+
+            Files.createDirectories(latestFolder);
+
+            Files.copy(
+                    Paths.get(FrameworkConstants.getReportPath()),
+                    Paths.get(FrameworkConstants.getLatestReportPath()),
+                    StandardCopyOption.REPLACE_EXISTING
+            );
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
     }
 }
