@@ -64,8 +64,8 @@ public final class PlaywrightFactory {
 //                .setIgnoreHTTPSErrors(true).setLocale("en-IN")
 //                .setTimezoneId("Asia/Kolkata").setColorScheme(ColorScheme.DARK)
 //                .setPermissions(List.of("clipboard-read", "camera", "microphone"))
-                .setRecordHarPath(Paths.get(FrameworkConstants.getHarFilePath(scenarioName)))
-                .setUserAgent("UAT Automation testing");
+                .setRecordHarPath(Paths.get(FrameworkConstants.getHarFilePath(scenarioName)));
+//                .setUserAgent("UAT Automation testing");
 //                .setBaseURL(PropertiesUtil.getValue(ConfigProperties.BASEURL));
     }
     //setViewportSize - horizontal , vertical height

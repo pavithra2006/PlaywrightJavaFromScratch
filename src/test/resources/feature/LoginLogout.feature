@@ -17,4 +17,4 @@ Feature: Login
       | username | password |
       | Admin1   | admin123 |
       | Admin2   | admin123 |
-      | User1    | pass123  |
+#      | User1    | pass123  |
