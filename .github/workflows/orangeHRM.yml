@@ -72,9 +72,7 @@ jobs:
 
       - name: Install Playwright Browsers
         run: |
-          mvn exec:java \
-          -Dexec.mainClass=com.microsoft.playwright.CLI \
-          -Dexec.args="install"
+            mvn exec:java -Dexec.mainClass=com.microsoft.playwright.CLI -Dexec.args="install --with-deps"
 
       ####################################################
       # Execute Tests
