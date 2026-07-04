@@ -64,23 +64,69 @@ public final class ExtentSpark { // no need to extend it
             extent.flush();
         }
 
+        if (!FrameworkConstants.isCI()) {
+            return;
+        }
+
         try {
 
-            Path latestFolder =
-                    Paths.get(FrameworkConstants.getLatestReportFolder());
+            Path latest = Paths.get(FrameworkConstants.getLatestReportFolder());
 
-            Files.createDirectories(latestFolder);
+            Files.createDirectories(latest);
 
-            Files.copy(
-                    Paths.get(FrameworkConstants.getReportPath()),
-                    Paths.get(FrameworkConstants.getLatestReportPath()),
-                    StandardCopyOption.REPLACE_EXISTING
-            );
+            copyDirectory(
+                    Paths.get(FrameworkConstants.getReportFolder()),
+                    latest.resolve("report"));
 
-            ExtentManager.unloadTest();
+            copyDirectory(
+                    Paths.get(FrameworkConstants.getScreenshotFolder()),
+                    latest.resolve("screenshots"));
+
+            copyDirectory(
+                    Paths.get(FrameworkConstants.getVideoFolder()),
+                    latest.resolve("videos"));
+
+            copyDirectory(
+                    Paths.get(FrameworkConstants.getHarFolder()),
+                    latest.resolve("har"));
+
+            copyDirectory(
+                    Paths.get(FrameworkConstants.getTraceFolder()),
+                    latest.resolve("traces"));
 
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    private static void copyDirectory(Path source, Path destination) throws IOException {
+
+        if (!Files.exists(source))
+            return;
+
+        Files.walk(source).forEach(path -> {
+
+            try {
+
+                Path target = destination.resolve(source.relativize(path));
+
+                if (Files.isDirectory(path)) {
+
+                    Files.createDirectories(target);
+
+                } else {
+
+                    Files.copy(
+                            path,
+                            target,
+                            StandardCopyOption.REPLACE_EXISTING);
+
+                }
+
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+
+        });
     }
 }

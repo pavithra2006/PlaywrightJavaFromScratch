@@ -142,4 +142,17 @@ public final class FrameworkConstants {
                 + File.separator
                 + "index.html";
     }
+
+    public static String getScreenshotFolder() {
+        return SCREENSHOT_FOLDER;
+    }
+
+    public static String getTraceFolder() {
+        return TRACE_FOLDER;
+    }
+
+    public static String getHarFolder() {
+        return HAR_FOLDER;
+    }
+
 }

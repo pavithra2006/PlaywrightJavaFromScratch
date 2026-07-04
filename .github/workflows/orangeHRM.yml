@@ -80,7 +80,7 @@ jobs:
 
       - name: Execute Tests
         run: |
-          mvn clean test \-Dbrowser=${{ matrix.browser }} \-Dheadless=true
+          mvn clean test -Dbrowser=${{ matrix.browser }} -Dheadless=true
 
       ####################################################
       # Retry Failed Scenarios
