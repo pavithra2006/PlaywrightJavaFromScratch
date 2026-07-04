@@ -43,7 +43,7 @@ public final class ExtentSpark { // no need to extend it
         spark.config().setReportName("Orange HRM portal testing"); // found in top right side
     }
     private static void addSystemInfo() {
-        extent.setSystemInfo("Browser", PropertiesUtil.getValue(ConfigProperties.BROWSER));
+        extent.setSystemInfo("Browser", System.getProperty("browser",PropertiesUtil.getValue(ConfigProperties.BROWSER)));
         extent.setSystemInfo("Environment", PropertiesUtil.getValue(ConfigProperties.ENVIRONMENT));
         extent.setSystemInfo("OS", System.getProperty("os.name"));
         extent.setSystemInfo("Java version", System.getProperty("java.version"));
