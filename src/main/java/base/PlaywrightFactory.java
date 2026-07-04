@@ -36,8 +36,12 @@ public final class PlaywrightFactory {
     }
 
     public static void initBrowser(String browserName, String scenarioName) {
-        boolean headless = Boolean.parseBoolean(PropertiesUtil.getValue(ConfigProperties.HEADLESS));
-
+        boolean headless = Boolean.parseBoolean(
+                System.getProperty(
+                        "headless",
+                        PropertiesUtil.getValue(ConfigProperties.HEADLESS)
+                )
+        );
         playwright.set(Playwright.create());
         browser.set(getBrowserType(browserName).launch(new BrowserType.LaunchOptions().setHeadless(headless).setSlowMo(0))
         );
