@@ -12,9 +12,6 @@ import io.cucumber.java.Scenario;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.slf4j.MDC;
-import org.testng.annotations.AfterTest;
-import org.testng.annotations.BeforeSuite;
-import org.testng.annotations.BeforeTest;
 import report.ExtentLogger;
 import report.ExtentManager;
 import report.ExtentSpark;
@@ -48,7 +45,12 @@ public class Hooks {
                         + " | "
                         + Thread.currentThread().getName());
 
-        PlaywrightFactory.initBrowser(PropertiesUtil.getValue(ConfigProperties.BROWSER), scenario.getName());
+        String browser = System.getProperty(
+                "browser",
+                PropertiesUtil.getValue(ConfigProperties.BROWSER));
+
+        PlaywrightFactory.initBrowser(browser, scenario.getName());
+//        PlaywrightFactory.initBrowser(PropertiesUtil.getValue(ConfigProperties.BROWSER), scenario.getName());
 
         Page page = PlaywrightFactory.getPage();
 

@@ -8,8 +8,27 @@ on:
 
   pull_request:
 
-  workflow_dispatch:
+workflow_dispatch:
 
+  inputs:
+
+    browser:
+
+      description: Browser
+
+      required: true
+
+      default: chromium
+
+      type: choice
+
+      options:
+
+        - chromium
+
+        - firefox
+
+        - webkit
   schedule:
     - cron: "0 14 * * *"
 
