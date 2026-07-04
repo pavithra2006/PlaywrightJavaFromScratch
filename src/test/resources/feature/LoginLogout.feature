@@ -1,7 +1,7 @@
 Feature: Login
 
   Scenario: Verify successful Login
-    When User logs in with username "Admin3" and password "admin123"
+    When User logs in with username "Admin" and password "admin123"
     Then Dashboard should be displayed
 
   Scenario: Verify successful logout
@@ -17,4 +17,4 @@ Feature: Login
       | username | password |
       | Admin1   | admin123 |
       | Admin2   | admin123 |
-#      | User1    | pass123  |
+      | User1    | pass123  |

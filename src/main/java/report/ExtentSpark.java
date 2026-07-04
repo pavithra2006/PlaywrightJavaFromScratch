@@ -77,9 +77,10 @@ public final class ExtentSpark { // no need to extend it
                     StandardCopyOption.REPLACE_EXISTING
             );
 
+            ExtentManager.unloadTest();
+
         } catch (Exception e) {
             e.printStackTrace();
         }
-
     }
 }

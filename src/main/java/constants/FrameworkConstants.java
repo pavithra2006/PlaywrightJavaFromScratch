@@ -6,72 +6,138 @@ import utils.RunManager;
 
 import java.io.File;
 
-//no object can be created
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public final class FrameworkConstants {
-    private static final String RESOURCESPATH = System.getProperty("user.dir") + "/src/main/resources";
-    private static final String CONFIGFILEPATH = RESOURCESPATH + "/config/config.properties";
-    //these variables cant be modified from anywhere, only through getters we can get value
-    private static final String EXTENTREPORTSFOLDERPATH = System.getProperty("user.dir") + "/extent-test-output";
-//    public static final String OUTPUT_FOLDER =System.getProperty("user.dir")+ "/test-output/"+ RunManager.getRunId();
-    private static String extentReportFilesPath = "";
-    private static final String RUN_FOLDER =
-            "test-output" + File.separator + RunManager.getRunId();
-    private static final String OUTPUT_FOLDER = "test-output";
-    //    private static final int EXPLICITWAIT = 20;
+
+    private static final String PROJECT_PATH = System.getProperty("user.dir");
+
+    private static final String LATEST_REPORT_FOLDER =
+            PROJECT_PATH
+                    + File.separator
+                    + "test-output"
+                    + File.separator
+                    + "latest";
+
+    private static final String RESOURCES_PATH =
+            PROJECT_PATH + File.separator + "src"
+                    + File.separator + "main"
+                    + File.separator + "resources";
+
+    private static final String CONFIG_FILE_PATH =
+            RESOURCES_PATH
+                    + File.separator + "config"
+                    + File.separator + "config.properties";
+
+    /**
+     * GitHub Actions automatically sets CI=true.
+     * Local execution -> false
+     */
+    private static final boolean IS_CI =
+            Boolean.parseBoolean(System.getenv().getOrDefault("CI", "false"));
+
+    /**
+     * Local:
+     * test-output/
+     *
+     * GitHub:
+     * test-output/20260704_210530/
+     */
+    private static final String OUTPUT_FOLDER =
+            PROJECT_PATH
+                    + File.separator
+                    + "test-output"
+                    + File.separator
+                    + RunManager.getRunId();
+
+    private static final String REPORT_FOLDER =
+            OUTPUT_FOLDER + File.separator + "report";
+
+    private static final String SCREENSHOT_FOLDER =
+            OUTPUT_FOLDER + File.separator + "screenshots";
+
+    private static final String VIDEO_FOLDER =
+            OUTPUT_FOLDER + File.separator + "videos";
+
+    private static final String TRACE_FOLDER =
+            OUTPUT_FOLDER + File.separator + "traces";
+
+    private static final String HAR_FOLDER =
+            OUTPUT_FOLDER + File.separator + "har";
+
+    private static final String LOG_FOLDER =
+            OUTPUT_FOLDER + File.separator + "logs";
+
     public static String getConfigFilePath() {
-        //getter method
-        return CONFIGFILEPATH;
+        return CONFIG_FILE_PATH;
     }
 
-//    public static String getExtentReportFilesPath() {
-//        if (extentReportFilesPath.isEmpty()) {
-//            extentReportFilesPath = getExtentReportsPath();
-//            return extentReportFilesPath;
-//        } else {
-//            return extentReportFilesPath;
-//        }
-//    }
-//
-//    private static String getExtentReportsPath() {
-//        return EXTENTREPORTSFOLDERPATH + "/" + System.currentTimeMillis() + "/index.html";
-//    }
+    public static String getOutputFolder() {
+        return OUTPUT_FOLDER;
+    }
+
+    public static String getReportFolder() {
+        return REPORT_FOLDER;
+    }
+
 
     public static String getReportPath() {
-        return OUTPUT_FOLDER + "/report/ExtentReport.html";
+        return REPORT_FOLDER
+                + File.separator
+                + "ExtentReport.html";
     }
 
     public static String getScreenshotPath(String fileName) {
-        return OUTPUT_FOLDER + "/screenshots/" + fileName + ".png";
-    }
-
-    public static String getTracePath(String scenarioName) {
-        return OUTPUT_FOLDER + "/traces/" + scenarioName + ".zip";
+        return SCREENSHOT_FOLDER
+                + File.separator
+                + fileName
+                + ".png";
     }
 
     public static String getVideoFolder() {
-        return OUTPUT_FOLDER + "/videos/";
+        return VIDEO_FOLDER;
     }
 
-    public static String getLogFile() {
-        return OUTPUT_FOLDER + "/logs/automation.log";
+    public static String getTracePath(String scenarioName) {
+        return TRACE_FOLDER
+                + File.separator
+                + scenarioName
+                + ".zip";
     }
 
     public static String getHarFilePath(String scenarioName) {
-        return OUTPUT_FOLDER + "/har/" + scenarioName + ".har";
+        return HAR_FOLDER
+                + File.separator
+                + scenarioName
+                + ".har";
     }
 
+    public static String getLogFile() {
+        return LOG_FOLDER
+                + File.separator
+                + "automation.log";
+    }
 
-
+    /**
+     * Only used by GitHub Actions
+     */
     public static String getRunFolder() {
-        return RUN_FOLDER;
+        return OUTPUT_FOLDER;
+    }
+
+    /**
+     * Optional
+     */
+    public static boolean isCI() {
+        return IS_CI;
     }
 
     public static String getLatestReportFolder() {
-        return OUTPUT_FOLDER + File.separator + "latest";
+        return LATEST_REPORT_FOLDER;
     }
 
     public static String getLatestReportPath() {
-        return getLatestReportFolder() + File.separator + "index.html";
+        return LATEST_REPORT_FOLDER
+                + File.separator
+                + "index.html";
     }
 }
