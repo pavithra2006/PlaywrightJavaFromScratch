@@ -54,6 +54,6 @@ public final class FrameworkConstants {
     }
 
     public static String getHarFilePath(String scenarioName) {
-        return OUTPUT_FOLDER + "/har/" + scenarioName + "/network.har";
+        return OUTPUT_FOLDER + "/har/" + scenarioName + ".har";
     }
 }

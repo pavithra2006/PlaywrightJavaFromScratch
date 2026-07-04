@@ -100,7 +100,7 @@ public class Hooks {
 
         if (!scenario.isFailed()) {
             Files.deleteIfExists(testContext.getPage().video().path());
-//            Files.deleteIfExists(Paths.get(FrameworkConstants.getHarFile(scenario.getName())));
+            Files.deleteIfExists(Paths.get(FrameworkConstants.getHarFilePath(scenario.getName())));
         }
 
         ExtentManager.unloadTest(); // flush ExtentReport Threadlocal variable
