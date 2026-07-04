@@ -12,13 +12,14 @@ import java.nio.file.Paths;
 public final class ScreenshotUtil {
     public static String capture(String fileName) {
 
-        String path = FrameworkConstants.getScreenshotPath(fileName);
+        String absolutePath =
+                FrameworkConstants.getScreenshotPath(fileName);
 
         PlaywrightFactory.getPage().screenshot(
                 new Page.ScreenshotOptions()
-                        .setPath(Paths.get(path))
+                        .setPath(Paths.get(absolutePath))
                         .setFullPage(true));
 
-        return path;
+        return "../screenshots/" + fileName + ".png";
     }
 }

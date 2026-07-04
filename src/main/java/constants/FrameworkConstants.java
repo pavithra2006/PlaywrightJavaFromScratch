@@ -98,7 +98,9 @@ public final class FrameworkConstants {
     }
 
     public static String getTracePath(String scenarioName) {
-        return TRACE_FOLDER
+        return OUTPUT_FOLDER
+                + File.separator
+                + "traces"
                 + File.separator
                 + scenarioName
                 + ".zip";
